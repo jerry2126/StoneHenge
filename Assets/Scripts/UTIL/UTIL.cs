@@ -7,10 +7,7 @@ using UnityEngine.UIElements;
 
 public class UTIL : MonoBehaviour
 {
-
-    
-
-
+    public string myName;
 
 
     private static readonly System.Random random = new System.Random();
