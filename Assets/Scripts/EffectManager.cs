@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 
 public class EffectManager : MonoBehaviour
 {
-   
     public GameObject particlePrefab; // Assign your prefab in Inspector
     public GameObject firefab; // Assign your prefab in Inspector
 
@@ -15,7 +14,7 @@ public class EffectManager : MonoBehaviour
         TargetStone.OnHitContactEvent += OnHitContactEvent;
     }
 
-    public  void OnHitContactEvent(Vector3 pos)
+    public void OnHitContactEvent(Vector3 pos)
     {
 
         GameObject psInstance = Instantiate(particlePrefab, pos, Quaternion.identity);
@@ -30,16 +29,8 @@ public class EffectManager : MonoBehaviour
 
     }
 
-
-
-
-
     public void SpawnParticles(Vector3 position)
     {
         // Optional cleanup
     }
 }
-
-
-
-

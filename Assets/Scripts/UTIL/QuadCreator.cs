@@ -17,7 +17,7 @@ public class QuadCreator : MonoBehaviour
     private void OnEnable()
     {
         position = container.transform.position;
-        position.y = 0.02f;
+        position.y = 0.05f;
     }
 
     public void Setup(float w, float h)

@@ -27,7 +27,7 @@ public class MainUI : MonoBehaviour
     public void OnValidate()
     {
         if (Application.isPlaying) return;
-        GenerateUI();
+       // GenerateUI();
     }
     private void GenerateUI()
     {

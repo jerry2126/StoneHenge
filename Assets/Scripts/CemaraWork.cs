@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CemaraWork : MonoBehaviour
 {
-
     [SerializeField] Camera _camera;
     [SerializeField] Camera _secondCemera;
     bool isCheck = false;
@@ -25,10 +24,11 @@ public class CemaraWork : MonoBehaviour
         _secondCemera.rect = new Rect(0.5f, 0f, 0.5f, 1f); // Right half
         _secondCemera.transform.LookAt(targetStone);
     }
+
     void Restore()
     {
         _camera.rect = new Rect(0f, 0f, 1f, 1f); // Left ha
-        _secondCemera.enabled= false;
+        _secondCemera.enabled = false;
     }
 
     private void TargetStone_OnKnockDownEvent(StoneType obj)
@@ -41,7 +41,7 @@ public class CemaraWork : MonoBehaviour
     {
         this.targetStone = targetStone;
         this.flyingStone = FlyingStone;
-        isCheck=true;
+        isCheck = true;
     }
 
     // Update is called once per frame
