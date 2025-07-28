@@ -5,6 +5,8 @@ namespace Controller
     [RequireComponent(typeof(CreatureMover))]
     public class MovePlayerInput : MonoBehaviour
     {
+        public GameObject Player;
+
         [Header("Character")]
         [SerializeField]
         private string m_HorizontalAxis = "Horizontal";
@@ -40,6 +42,11 @@ namespace Controller
             m_Mover = GetComponent<CreatureMover>();
         }
 
+        private void Start()
+        {
+            Player = Player ?? GameObject.FindWithTag("Player"); // Ensure Player is assigned, otherwise find by tag
+        }
+
         private void Update()
         {
             //GatherInput();
@@ -52,7 +59,7 @@ namespace Controller
             m_IsRun = Input.GetKey(m_RunKey);
             m_IsJump = Input.GetButton(m_JumpButton);
 
-            m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
+            //m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
             m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));
             m_Scroll = Input.GetAxis(m_MouseScroll);
         }
@@ -62,12 +69,8 @@ namespace Controller
             m_Axis = vec2;
             m_IsRun = isrun;
 
-            //m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
-            //m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));
-            //m_Scroll = Input.GetAxis(m_MouseScroll);
+            m_Target = Player.transform.position;
         }
-
-        
 
         public void BindMover(CreatureMover mover)
         {

@@ -10,24 +10,16 @@ namespace Controller
     public class CreatureMover : MonoBehaviour
     {
         [Header("Movement")]
-        [SerializeField]
-        private float m_WalkSpeed = 1f;
-        [SerializeField]
-        private float m_RunSpeed = 4f;
-        [SerializeField, Range(0f, 360f)]
-        private float m_RotateSpeed = 90f;
-        [SerializeField]
-        private Space m_Space = Space.Self;
-        [SerializeField]
-        private float m_JumpHeight = 5f;
+        [SerializeField] private float m_WalkSpeed;
+        [SerializeField] private float m_RunSpeed;
+        [SerializeField, Range(0f, 360f)] private float m_RotateSpeed = 90f;
+        [SerializeField] private Space m_Space = Space.Self;
+        [SerializeField] private float m_JumpHeight = 5f;
 
         [Header("Animator")]
-        [SerializeField]
-        private string m_VerticalID = "Vert";
-        [SerializeField]
-        private string m_StateID = "State";
-        [SerializeField]
-        private LookWeight m_LookWeight = new(1f, 0.3f, 0.7f, 1f);
+        [SerializeField] private string m_VerticalID = "Vert";
+        [SerializeField] private string m_StateID = "State";
+        [SerializeField] private LookWeight m_LookWeight = new(1f, 0.3f, 0.7f, 1f);
 
         private Transform m_Transform;
         private CharacterController m_Controller;
@@ -97,6 +89,13 @@ namespace Controller
                 m_Axis = Vector3.ClampMagnitude(m_Axis, 1f);
                 m_IsMoving = true;
             }
+        }
+
+        public void SetMovement(Vector2 vec2)
+        {
+            m_WalkSpeed += vec2.x;
+            m_RunSpeed += vec2.y;
+            m_Movement?.SetStats(m_WalkSpeed / 3.6f, m_RunSpeed / 3.6f, m_RotateSpeed, m_JumpHeight, m_Space);
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
