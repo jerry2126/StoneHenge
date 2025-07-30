@@ -2,19 +2,21 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class ZombiSpawner : MonoBehaviour
+public class AnimalSpawner : MonoBehaviour
 {
+    public static event Action OnSpawnAnimalEvent;
 
-    public static event Action OnSpawnZombiEvent;
-    public GameObject zombiPrefab;
-    public Transform startPoint;
-    public int zombiCount;
+    [SerializeField] Transform container;
+    public Transform spawnPoint;
+    public GameObject animalPrefab;
+
+    public int animalCount;
     public float spacing = 2f; // Distance between cubes
     public float radius = 2f;
+
     public LayerMask targetLayer;
-    [SerializeField] ItemTag zombiTag;
+    [SerializeField] ItemTag animalTag;
     [SerializeField] ItemTag targetTag;
-    [SerializeField] Transform container;
 
     GameObject[,] objectGrid;
     int count = 0;
@@ -30,30 +32,29 @@ public class ZombiSpawner : MonoBehaviour
             GameObject obj = col.gameObject;
             Destroy(obj);
         }
-        StartCoroutine(CheckLastZombi());
+        StartCoroutine(CheckLastAnimal());
     }
 
-    IEnumerator CheckLastZombi()
+    IEnumerator CheckLastAnimal()
     {
         yield return null;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(zombiTag.ToString());
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(animalTag.ToString());
 
         if (enemies.Length == 0)
         {
-
             yield return new WaitForSeconds(1);
-            OnSpawnZombiEvent?.Invoke();
-            SpawnZombi();
+            OnSpawnAnimalEvent?.Invoke();
+            SpawnAnimal();
         }
     }
 
 
     private void Start()
     {
-        TargetStone.OnKnockDownToZombiEvent += TargetStone_OnKnockDownEvent;
+        TargetStone.OnKnockDownToAnimalEvent += TargetStone_OnKnockDownEvent;
         //TargetStone.OnHitByProjectile += TargetStone_OnHitByProjectile;
 
-        SpawnZombi();
+        SpawnAnimal();
     }
 
     private void TargetStone_OnHitByProjectile(StoneType obj)
@@ -64,23 +65,22 @@ public class ZombiSpawner : MonoBehaviour
 
     private void TargetStone_OnKnockDownEvent(Vector3 pos)
     {
-
         FindAndRemove(pos, radius);
     }
 
-    public void SpawnZombi()
+    public void SpawnAnimal()
     {
-        objectGrid = new GameObject[zombiCount, zombiCount];
+        objectGrid = new GameObject[animalCount, animalCount];
         count = 0;
-        int gridSize = Mathf.CeilToInt(Mathf.Pow(zombiCount, 1f / 3f)); // Cube root for 3D grid
+        int gridSize = Mathf.CeilToInt(Mathf.Pow(animalCount, 1f / 3f)); // Cube root for 3D grid
         int y = 1;
 
-        for (int x = 0; x < zombiCount; x++)
+        for (int x = 0; x < animalCount; x++)
         {
-            for (int z = 0; z < zombiCount; z++)
+            for (int z = 0; z < animalCount; z++)
             {
                 Vector3 position = new Vector3(x, y, z) * spacing;
-                GameObject clone = Instantiate(zombiPrefab, position, Quaternion.identity);
+                GameObject clone = Instantiate(animalPrefab, position, Quaternion.identity);
                 clone.transform.SetParent(container, false);
                 objectGrid[x, z] = clone;
             }
@@ -89,7 +89,7 @@ public class ZombiSpawner : MonoBehaviour
 
     void DestoryFrontLine(int index)
     {
-        for (int col = 0; col < zombiCount; col++)
+        for (int col = 0; col < animalCount; col++)
         {
             GameObject obj = objectGrid[index, col];
             if (obj != null)
@@ -97,8 +97,6 @@ public class ZombiSpawner : MonoBehaviour
                 Destroy(obj);
             }
         }
-        CheckLastZombi();
+        CheckLastAnimal();
     }
-
 }
-

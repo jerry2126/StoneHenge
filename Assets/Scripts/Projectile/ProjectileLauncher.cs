@@ -1,15 +1,16 @@
 using UnityEngine;
 public class ProjectileLauncher : MonoBehaviour
 {
+    [SerializeField] CameraFollow cameraFollow;
+    public ProjectileSO projectileSO;
     public Transform launchPoint;
     public GameObject projectile;
     public float launchSpeed = 10f;
-    public ProjectileSO projectileSO;
+
     [Header("Trajectory Display")]
     public LineRenderer lineRenderer;
     public int linePoints = 175;
     public float timeIntervalInPoints = 0.01f;
-    [SerializeField] CameraFollow cameraFollow;
 
     public bool isDrawing=true;
 

@@ -7,12 +7,12 @@ TagManager:
   - Stone
   - Ground
   - Target
-  - Zombi
+  - Animal
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Zombi
+  - Animal
   - Water
   - UI
   - Target

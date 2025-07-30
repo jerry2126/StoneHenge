@@ -7,7 +7,6 @@ class AbilityExecutor : MonoBehaviour
 
     void SpawnVFX()
     {
-
         if (ability.vfxPrefab == null) return;
 
         var vfx = Instantiate(ability.vfxPrefab, target.transform.position, transform.rotation);

@@ -9,8 +9,7 @@ public class AbilitySO : ScriptableObject
 
     public GameObject vfxPrefab;
 
-    //[SerializeReference] public List<AbilityEffect> effects;
-    [SerializeReference] List<AbilityEffect> effects;
+    [SerializeReference] public List<AbilityEffect> effects;
 
     void OnEnable()
     {
@@ -20,13 +19,13 @@ public class AbilitySO : ScriptableObject
 }
 
 [Serializable]
-abstract class AbilityEffect
+public abstract class AbilityEffect // Changed to public to match accessibility  
 {
     public abstract void Execute(GameObject caster, GameObject target);
 }
 
 [Serializable]
-class DamageEffect : AbilityEffect
+public class DamageEffect : AbilityEffect // Changed to public to match accessibility  
 {
     public int amount;
 
@@ -38,7 +37,7 @@ class DamageEffect : AbilityEffect
 }
 
 [Serializable]
-class KnockbackEffect : AbilityEffect
+public class KnockbackEffect : AbilityEffect // Changed to public to match accessibility  
 {
     public float force;
 

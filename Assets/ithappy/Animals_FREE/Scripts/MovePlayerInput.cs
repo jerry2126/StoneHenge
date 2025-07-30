@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Controller
@@ -5,7 +6,7 @@ namespace Controller
     [RequireComponent(typeof(CreatureMover))]
     public class MovePlayerInput : MonoBehaviour
     {
-        public GameObject Player;
+        public AnimalController AnimalController;
 
         [Header("Character")]
         [SerializeField]
@@ -31,45 +32,40 @@ namespace Controller
 
         private Vector2 m_Axis;
         private bool m_IsRun;
-        private bool m_IsJump;
+        //private bool m_IsJump;
 
         public Vector3 m_Target;
-        private Vector2 m_MouseDelta;
-        private float m_Scroll;
+        //private Vector2 m_MouseDelta;
+        //private float m_Scroll;
 
         private void Awake()
         {
             m_Mover = GetComponent<CreatureMover>();
         }
 
-        private void Start()
-        {
-            Player = Player ?? GameObject.FindWithTag("Player"); // Ensure Player is assigned, otherwise find by tag
-        }
+        //private void Update()
+        //{
+        //    //GatherInput();
+        //    //SetInput();
+        //}
 
-        private void Update()
-        {
-            //GatherInput();
-            SetInput();
-        }
+        //public void GatherInput()
+        //{
+        //    m_Axis = new Vector2(Input.GetAxis(m_HorizontalAxis), Input.GetAxis(m_VerticalAxis));
+        //    m_IsRun = Input.GetKey(m_RunKey);
+        //    m_IsJump = Input.GetButton(m_JumpButton);
 
-        public void GatherInput()
-        {
-            m_Axis = new Vector2(Input.GetAxis(m_HorizontalAxis), Input.GetAxis(m_VerticalAxis));
-            m_IsRun = Input.GetKey(m_RunKey);
-            m_IsJump = Input.GetButton(m_JumpButton);
-
-            //m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
-            m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));
-            m_Scroll = Input.GetAxis(m_MouseScroll);
-        }
+        //    //m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
+        //    m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));
+        //    m_Scroll = Input.GetAxis(m_MouseScroll);
+        //}
 
         public void GatherInputSample(Vector2 vec2, bool isrun)
         {
             m_Axis = vec2;
             m_IsRun = isrun;
 
-            m_Target = Player.transform.position;
+            m_Target = AnimalController.player.transform.position;
         }
 
         public void BindMover(CreatureMover mover)
@@ -77,17 +73,22 @@ namespace Controller
             m_Mover = mover;
         }
 
-        public void SetInput()
+        internal void GatherInputSample(Vector2 vec2, bool v, Vector3 position)
         {
-            if (m_Mover != null)
-            {
-                m_Mover.SetInput(in m_Axis, in m_Target, in m_IsRun, m_IsJump);
-            }
-
-            if (m_Camera != null)
-            {
-                m_Camera.SetInput(in m_MouseDelta, m_Scroll);
-            }
+            throw new NotImplementedException();
         }
+
+        //public void SetInput()
+        //{
+        //    if (m_Mover != null)
+        //    {
+        //        m_Mover.SetInput(in m_Axis, in m_Target, in m_IsRun, m_IsJump);
+        //    }
+
+        //    if (m_Camera != null)
+        //    {
+        //        m_Camera.SetInput(in m_MouseDelta, m_Scroll);
+        //    }
+        //}
     }
 }

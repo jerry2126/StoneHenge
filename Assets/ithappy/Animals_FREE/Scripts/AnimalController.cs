@@ -8,8 +8,8 @@ public class AnimalController : MonoBehaviour
     [SerializeField] List<GameObject> animals;
     [SerializeField] Transform container;  //parent...
     [SerializeField] EffectOnAnimal effectOnAnimal;
-    public float spacing = 2f; // Dist 
-    [SerializeField] Transform player;  // 
+    public GameObject player;  //
+    public float spacing = 2f; // Dist
 
     int animalCount = 5;
 
@@ -19,6 +19,15 @@ public class AnimalController : MonoBehaviour
     {
         SpawnAnimals();
         EnableAnimals();
+    }
+
+    public void RunToPlayer()
+    {
+        foreach (Transform child in container)
+        {
+            Vector2 vec2 = new Vector2(0, 1);
+            child.GetComponent<MovePlayerInput>().GatherInputSample(vec2, true, player.transform.position);
+        }
     }
 
     void CollectAnimals()
@@ -31,7 +40,7 @@ public class AnimalController : MonoBehaviour
         }
 
         List<Transform> closestObjects = allObjects
-            .OrderBy(obj => Vector3.Distance(player.position, obj.position))
+            .OrderBy(obj => Vector3.Distance(player.transform.position, obj.position))
             .Take(5)
             .ToList();
 
@@ -88,34 +97,5 @@ public class AnimalController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Vector2 vec2 = new Vector2(+1, +1);
-            foreach (Transform child in container)
-            {
-                child.GetComponent<CreatureMover>().SetMovement(vec2);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Vector2 vec2 = new Vector2(-1, -1);
-            foreach (Transform child in container)
-            {
-                child.GetComponent<CreatureMover>().SetMovement(vec2);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GetMoveAnimal();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            CollectAnimals();
-        }
-    }
+    
 }

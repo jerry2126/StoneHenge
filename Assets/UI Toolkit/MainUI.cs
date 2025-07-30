@@ -2,25 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UIElements;
 public class MainUI : MonoBehaviour
 {
+    [Header("Script")]
+    [SerializeField] GameManager gameManager;
+
     [Header("UI"), Space(10)]
     [SerializeField] UIDocument _document;
     [SerializeField] StyleSheet _styleSheet;
-    [SerializeField] ProjectileLauncher myProjectileLauncher;
-    [SerializeField] TargetStoneManager targetStoneManager;
-    public Transform launchingPad;
-    public ProjectileSO projectileSO;
+
     [Header("Images")]
     public Sprite flyingStoneSprite;
     public Sprite targetStoneSprite;
    
-   
     VisualElement root;
     VisualElement container;
-    Button throwBtn, drawBtn,quitBtn;
+    Button throwBtn, drawBtn, quitBtn;
     Slider YSlider, ZSlider, speedSlider, massSlider;
 
 
@@ -29,9 +27,9 @@ public class MainUI : MonoBehaviour
         if (Application.isPlaying) return;
        // GenerateUI();
     }
+
     private void GenerateUI()
     {
-
         root = _document.rootVisualElement;       
         root.styleSheets.Add(_styleSheet);
              
@@ -61,20 +59,17 @@ public class MainUI : MonoBehaviour
 
         container.Add(buttonContainer);
 
-
         container.Add(YSlider);
         container.Add(ZSlider);
         container.Add(massSlider);
         container.Add(speedSlider);
         root.Add(container);
-
     }
 
     private void Awake()
     {
         root = _document.rootVisualElement;
         root.styleSheets.Add(_styleSheet);
-
     }
 
     private void Start()
@@ -90,7 +85,6 @@ public class MainUI : MonoBehaviour
         list.Add("WOW");
         list.Add("You Won");
         ShowPopup(list, WhenYouWin);
-
     }
 
     public void OnRayCastHitZombiEventHandler() 
@@ -105,15 +99,16 @@ public class MainUI : MonoBehaviour
     {        
         Debug.Log("Game again!");
     }
+
     void WhenYouWin()
     {
-        targetStoneManager.CreateOneTargeStone();
+        gameManager.targetStoneManager.CreateOneTargeStone();
     }
+
     public void TargetStone_OnKnockDownEvent(StoneType obj) //stage clear
     {
         //what to do next? 
         Debug.Log("One stone fell down!");
-
     }
 
     private void Initialize()
@@ -125,15 +120,13 @@ public class MainUI : MonoBehaviour
         speedSlider.lowValue = 0;
         speedSlider.highValue = 30;
 
-        Vector3 rotation = launchingPad.transform.eulerAngles;
+        Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
 
         YSlider.value = rotation.y;
         ZSlider.value = rotation.z;
 
-       
-
-        speedSlider.value = projectileSO.speed;
-        massSlider.value = projectileSO.mass;
+        speedSlider.value = gameManager.projectileSO.speed;
+        massSlider.value = gameManager.projectileSO.mass;
 
         //image
         // Create the image element
@@ -153,44 +146,43 @@ public class MainUI : MonoBehaviour
 
         drawBtn.RegisterCallback<MouseEnterEvent>(evt =>
         {
-           
             drawBtn.style.backgroundColor = new StyleColor(Color.green);
-            myProjectileLauncher.isDrawing = true;
+            gameManager.projectileLauncher.isDrawing = true;
         });
 
         drawBtn.RegisterCallback<MouseLeaveEvent>(evt =>
         {
-           
             drawBtn.style.backgroundColor = new StyleColor(Color.white);
-           // myProjectileLauncher.isDrawing = false;
+            //myProjectileLauncher.isDrawing = false;
         });
 
         YSlider.RegisterValueChangedCallback(evt =>
         {
-            Vector3 rotation = launchingPad.transform.eulerAngles;
-            projectileSO.angleY = evt.newValue;
+            Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
+            gameManager.projectileSO.angleY = evt.newValue;
             YSlider.label = string.Concat(evt.newValue.ToString(), " Angle");
 
-            launchingPad.transform.rotation = Quaternion.Euler(rotation.x, evt.newValue, rotation.z);
+            gameManager.launchingPad.transform.rotation = Quaternion.Euler(rotation.x, evt.newValue, rotation.z);
         });
+
         ZSlider.RegisterValueChangedCallback(evt =>
         {
-            Vector3 rotation = launchingPad.transform.eulerAngles;
-            projectileSO.angleZ = evt.newValue;
+            Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
+            gameManager.projectileSO.angleZ = evt.newValue;
             ZSlider.label = string.Concat(evt.newValue.ToString(), " Angle");
-            launchingPad.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, evt.newValue);
+            gameManager.launchingPad.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, evt.newValue);
         });
+
         speedSlider.RegisterValueChangedCallback(evt =>
         {
-            projectileSO.speed = evt.newValue;
+            gameManager.projectileSO.speed = evt.newValue;
             speedSlider.label = string.Concat(evt.newValue.ToString(), " Speed");
-
         });
+
         massSlider.RegisterValueChangedCallback(evt =>
         {
-            projectileSO.mass = evt.newValue;
+            gameManager.projectileSO.mass = evt.newValue;
             massSlider.label = string.Concat(evt.newValue.ToString(), " Mass");
-
         });
     }
 
@@ -206,9 +198,10 @@ public class MainUI : MonoBehaviour
 
     private void OnThrowButtonClick()
     {
-        myProjectileLauncher.ThrowStone();
+        gameManager.projectileLauncher.ThrowStone();
         container.visible = false;
     }
+
     public void FlyingStone_OnMissionComplete()
     {
         //TODO 시점 조정 
@@ -240,18 +233,18 @@ public class MainUI : MonoBehaviour
         root.Add(_popupContainer);
         StartCoroutine(FadeIn(_popupContainer));
     }
+
     IEnumerator FadeIn(VisualElement element)
     {
         element.AddToClassList("fade");
         yield return null;
         element.AddToClassList("fade-in");
     }
+
     IEnumerator FadeOut(VisualElement element)
     {
         element.AddToClassList("fade-hidden");
         yield return new WaitForSeconds(0.5f);
         element.RemoveFromHierarchy();
-
     }
-
 }
