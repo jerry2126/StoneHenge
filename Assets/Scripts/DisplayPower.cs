@@ -8,7 +8,7 @@ public class DisplayPower : MonoBehaviour
 
     private void Start()
     {
-        label01.text = "Red Stone";
-        label02.text = "Power: 100";
+        label01.text = "ª°∞£ µπ∏Õ¿Ã";
+        label02.text = "»˚: 100";
     }
 }

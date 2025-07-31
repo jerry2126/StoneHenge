@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 63999291}
   - component: {fileID: 63999292}
-  - component: {fileID: 63999293}
   - component: {fileID: 63999294}
   m_Layer: 0
   m_Name: GameManager
@@ -170,22 +169,8 @@ MonoBehaviour:
   projectileLauncher: {fileID: 930342506}
   targetStoneManager: {fileID: 270033580}
   animalController: {fileID: 1062204901}
-  timeStopper: {fileID: 63999293}
   timeController: {fileID: 63999294}
   launchingPad: {fileID: 612391968}
---- !u!114 &63999293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 63999290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1013b8aadd3c0de4db40916ae36bdaf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopDuration: 2
 --- !u!114 &63999294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowTimeScale: 0.2
   slowDuration: 2
+  stopDuration: 2
 --- !u!1 &157207112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,7 +1725,7 @@ PrefabInstance:
       objectReference: {fileID: 612391968}
     - target: {fileID: 7613195147600612028, guid: a91b85784d8f4f74ca9c52599c21e3a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7613195147600612028, guid: a91b85784d8f4f74ca9c52599c21e3a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1901,7 +1887,7 @@ MonoBehaviour:
   gameManager: {fileID: 63999292}
   _document: {fileID: 1568360339}
   _styleSheet: {fileID: 7433441132597879392, guid: 7a087892b06acc640ab260a60c3f22a3, type: 3}
-  flyingStoneSprite: {fileID: 21300000, guid: b630ac4276d988543a7e791a3f085e24, type: 3}
+  ProjectileSprite: {fileID: 0}
   targetStoneSprite: {fileID: 21300000, guid: 30b7aef64688ab84dbaee153e7b37ecb, type: 3}
 --- !u!114 &1568360339
 MonoBehaviour:

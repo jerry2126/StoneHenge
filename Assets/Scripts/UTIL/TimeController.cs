@@ -6,6 +6,8 @@ public class TimeController : MonoBehaviour
     public float slowTimeScale = 0.2f;
     public float slowDuration = 2f;
 
+    public float stopDuration = 2f;
+
     private float originalTimeScale;
     private float originalFixedDeltaTime;
 
@@ -30,5 +32,16 @@ public class TimeController : MonoBehaviour
         Time.timeScale = originalTimeScale;
         Time.fixedDeltaTime = originalFixedDeltaTime;
     }
-}
 
+    public void StopTimeTemporarily()
+    {
+        StartCoroutine(StopTimeCoroutine());
+    }
+
+    private IEnumerator StopTimeCoroutine()
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(stopDuration); // unaffected by timeScale
+        Time.timeScale = 1f;
+    }
+}

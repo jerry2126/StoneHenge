@@ -10,8 +10,8 @@ namespace Controller
     public class CreatureMover : MonoBehaviour
     {
         [Header("Movement")]
-        [SerializeField] private float m_WalkSpeed;
-        [SerializeField] private float m_RunSpeed;
+        public float m_WalkSpeed;
+        public float m_RunSpeed;
         [SerializeField, Range(0f, 360f)] private float m_RotateSpeed = 90f;
         [SerializeField] private Space m_Space = Space.Self;
         [SerializeField] private float m_JumpHeight = 5f;

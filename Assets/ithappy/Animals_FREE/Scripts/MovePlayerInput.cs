@@ -6,29 +6,28 @@ namespace Controller
     [RequireComponent(typeof(CreatureMover))]
     public class MovePlayerInput : MonoBehaviour
     {
-        public AnimalController AnimalController;
+        [SerializeField] CreatureMover m_Mover;
+        [SerializeField] GameObject player;
 
-        [Header("Character")]
-        [SerializeField]
-        private string m_HorizontalAxis = "Horizontal";
-        [SerializeField]
-        private string m_VerticalAxis = "Vertical";
-        [SerializeField]
-        private string m_JumpButton = "Jump";
-        [SerializeField]
-        private KeyCode m_RunKey = KeyCode.LeftShift;
+        //[Header("Character")]
+        //[SerializeField]
+        //private string m_HorizontalAxis = "Horizontal";
+        //[SerializeField]
+        //private string m_VerticalAxis = "Vertical";
+        //[SerializeField]
+        //private string m_JumpButton = "Jump";
+        //[SerializeField]
+        //private KeyCode m_RunKey = KeyCode.LeftShift;
 
-        [Header("Camera")]
-        [SerializeField]
-        private PlayerCamera m_Camera;
-        [SerializeField]
-        private string m_MouseX = "Mouse X";
-        [SerializeField]
-        private string m_MouseY = "Mouse Y";
-        [SerializeField]
-        private string m_MouseScroll = "Mouse ScrollWheel";
-
-        private CreatureMover m_Mover;
+        //[Header("Camera")]
+        //[SerializeField]
+        //private PlayerCamera m_Camera;
+        //[SerializeField]
+        //private string m_MouseX = "Mouse X";
+        //[SerializeField]
+        //private string m_MouseY = "Mouse Y";
+        //[SerializeField]
+        //private string m_MouseScroll = "Mouse ScrollWheel";
 
         private Vector2 m_Axis;
         private bool m_IsRun;
@@ -41,6 +40,8 @@ namespace Controller
         private void Awake()
         {
             m_Mover = GetComponent<CreatureMover>();
+            player = GameObject.FindGameObjectWithTag("Player");
+            m_Target = player.transform.position;
         }
 
         //private void Update()
@@ -64,8 +65,6 @@ namespace Controller
         {
             m_Axis = vec2;
             m_IsRun = isrun;
-
-            m_Target = AnimalController.player.transform.position;
         }
 
         public void BindMover(CreatureMover mover)
@@ -73,9 +72,16 @@ namespace Controller
             m_Mover = mover;
         }
 
-        internal void GatherInputSample(Vector2 vec2, bool v, Vector3 position)
+        public void GatherInputSample(Vector2 vec2, bool isrun, Vector3 position)
         {
-            throw new NotImplementedException();
+            m_Axis = vec2;
+            m_IsRun = isrun;
+            m_Target = position;
+        }
+
+        internal void SetSpeed(Vector2 speed)
+        {
+            m_Mover.SetMovement(speed);
         }
 
         //public void SetInput()

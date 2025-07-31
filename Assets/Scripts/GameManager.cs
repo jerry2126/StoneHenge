@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     public ProjectileLauncher projectileLauncher;
     public TargetStoneManager targetStoneManager;
     public AnimalController animalController;
-    public TimeStopper timeStopper;
     public TimeController timeController;
 
     [Header("Transform")]
@@ -25,13 +24,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        RaycastDrawer.OnRayCastHitZombiEvent += OnRayCastHitZombiEventHandler;
+        RaycastDrawer.OnRayCastHitZombiEvent += OnRayCastHitAnimalEventHandler;
         TargetStone.OnKnockDownEvent += TargetStone_OnKnockDownEvent;
         TargetStoneManager.OnStageClearEvent += OnStageClearEvent;
         FlyingStone.OnMissionComplete += FlyingStone_OnMissionComplete;
 
         targetStoneManager.CreateOneTargeStone();
-        // animalSpawner.SpawnAnimal();
+        animalController.Initialize();
     }
 
     private void FlyingStone_OnMissionComplete()
@@ -50,9 +49,15 @@ public class GameManager : MonoBehaviour
        mainUI.TargetStone_OnKnockDownEvent((StoneType)type);
     }
 
-    private void OnRayCastHitZombiEventHandler()
+    private void OnRayCastHitAnimalEventHandler()
     {
         mainUI.OnRayCastHitZombiEventHandler();
        //What to do next? 
+    }
+
+    public void ThrowStone()
+    {
+        projectileLauncher.ThrowStone();
+        animalController.RunToPlayer();
     }
 }

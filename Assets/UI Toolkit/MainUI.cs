@@ -13,7 +13,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] StyleSheet _styleSheet;
 
     [Header("Images")]
-    public Sprite flyingStoneSprite;
+    public Sprite ProjectileSprite;
     public Sprite targetStoneSprite;
    
     VisualElement root;
@@ -131,7 +131,7 @@ public class MainUI : MonoBehaviour
         //image
         // Create the image element
         Image image = new Image();
-        image.sprite = flyingStoneSprite; // Assign your sprite here
+        image.sprite = ProjectileSprite; // Assign your sprite here
         image.scaleMode = ScaleMode.ScaleToFit;
         image.style.flexGrow = 1;
 
@@ -198,7 +198,7 @@ public class MainUI : MonoBehaviour
 
     private void OnThrowButtonClick()
     {
-        gameManager.projectileLauncher.ThrowStone();
+        gameManager.ThrowStone();
         container.visible = false;
     }
 

@@ -80,9 +80,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8455424182341874882}
   - {fileID: 2297063538849935876}
   - {fileID: 7207071950914917813}
+  - {fileID: 8455424182341874882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3872885512295462252
@@ -170,5 +170,5 @@ MonoBehaviour:
   - {fileID: 5883155896844355918, guid: 8741cd6c8b9fc3947999191d0c381f50, type: 3}
   container: {fileID: 8455424182341874882}
   effectOnAnimal: {fileID: 8087596867728042444}
-  spacing: 2
   player: {fileID: 0}
+  spacing: 2
