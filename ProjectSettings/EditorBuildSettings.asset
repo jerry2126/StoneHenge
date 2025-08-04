@@ -5,6 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EntityScene.unity
+    guid: 2b3807635cb6e034baa6d3daae15c46a
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 93db45df42e24514491969f44aed72e0
+  - enabled: 1
+    path: Assets/Scenes/StoneHenge.unity
+    guid: 6955ab9d87aa5944fb9f83e9e3a5b53e
+  - enabled: 1
+    path: Assets/Scenes/TEST.unity
+    guid: f9de989af64c41245977e5ad43739811
   - enabled: 0
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1

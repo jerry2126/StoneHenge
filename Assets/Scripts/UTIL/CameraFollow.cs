@@ -6,13 +6,14 @@ public class CameraFollow : MonoBehaviour
     public Vector3 offset = new Vector3(0, 2, -5); // Adjust as needed
     public float smoothSpeed = 5f;
     Vector3 originPos;
-    Quaternion rotation;
-
+    Quaternion originRot;
     public bool isFollowTarget = false;
+
+
     private void OnEnable()
     {
         originPos = transform.position;
-        rotation = transform.rotation;
+        originRot = transform.rotation;
     }
 
     public void SetTarget(Transform target)
@@ -21,11 +22,12 @@ public class CameraFollow : MonoBehaviour
         smoothSpeed = 5f;
         isFollowTarget = true;
     }
+
     public void Restore()
     {
-        transform.position= originPos;
-        transform.rotation= rotation;
-        isFollowTarget= false;
+        transform.position = originPos;
+        transform.rotation = originRot;
+        isFollowTarget = false;
     }
 
     void LateUpdate()
@@ -45,4 +47,3 @@ public class CameraFollow : MonoBehaviour
         transform.LookAt(target);
     }
 }
-
