@@ -12,6 +12,10 @@ public class MainUI : MonoBehaviour
     [SerializeField] UIDocument _document;
     [SerializeField] StyleSheet _styleSheet;
 
+    [Header("Transform")]
+    [SerializeField] Transform cannon;      //Y angle
+    [SerializeField] Transform gunBarrel;   //X angle
+
     [Header("Images")]
     public Sprite ProjectileSprite;
     public Sprite targetStoneSprite;
@@ -19,7 +23,7 @@ public class MainUI : MonoBehaviour
     VisualElement root;
     VisualElement container;
     Button throwBtn, drawBtn, quitBtn;
-    Slider YSlider, ZSlider, speedSlider, massSlider;
+    Slider BarrelSlider, CannonSlider, speedSlider, massSlider;
 
 
     public void OnValidate()
@@ -43,10 +47,10 @@ public class MainUI : MonoBehaviour
         drawBtn.text = "Draw";
         quitBtn.text = "Quit";
 
-        YSlider = UTIL.Create<Slider>("my-slider");
-        YSlider.label = $"Y angle";
-        ZSlider = UTIL.Create<Slider>("my-slider");
-        ZSlider.label = $"Z angle";
+        BarrelSlider = UTIL.Create<Slider>("my-slider");
+        BarrelSlider.label = $"Y angle";
+        CannonSlider = UTIL.Create<Slider>("my-slider");
+        CannonSlider.label = $"Z angle";
         massSlider = UTIL.Create<Slider>("my-slider");
         massSlider.label = $"Mass";
         speedSlider = UTIL.Create<Slider>("my-slider");
@@ -59,8 +63,8 @@ public class MainUI : MonoBehaviour
 
         container.Add(buttonContainer);
 
-        container.Add(YSlider);
-        container.Add(ZSlider);
+        container.Add(BarrelSlider);
+        container.Add(CannonSlider);
         container.Add(massSlider);
         container.Add(speedSlider);
         root.Add(container);
@@ -90,7 +94,7 @@ public class MainUI : MonoBehaviour
     public void OnRayCastHitZombiEventHandler() 
     {
         List<string> list = new List<string>();
-        list.Add("WOW");
+        list.Add("Lose");
         list.Add("You lost");
         ShowPopup(list, WhenYouLose);
     }
@@ -111,20 +115,28 @@ public class MainUI : MonoBehaviour
         Debug.Log("One stone fell down!");
     }
 
+    private void SeupElements()
+    {
+        CannonSlider.lowValue = 180f-30f;
+        CannonSlider.highValue = 180f+30f;
+
+        BarrelSlider.lowValue = 12.5f-20f;
+        BarrelSlider.highValue = 12.5f+20f;
+
+        CannonSlider.value = 180f;
+        BarrelSlider.value = 12.5f;
+
+        massSlider.lowValue = 1f;
+        massSlider.highValue = 5f;
+
+        speedSlider.lowValue = 10f;
+        speedSlider.highValue = 30f;
+    }
+
     private void Initialize()
     {
-        YSlider.lowValue = -90f;
-        YSlider.highValue = 90f;
-        ZSlider.lowValue = -90f;
-        ZSlider.highValue = 90f;
-        speedSlider.lowValue = 0;
-        speedSlider.highValue = 30;
-
-        Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
-
-        YSlider.value = rotation.y;
-        ZSlider.value = rotation.z;
-
+        SeupElements();
+       
         speedSlider.value = gameManager.projectileSO.speed;
         massSlider.value = gameManager.projectileSO.mass;
 
@@ -156,22 +168,16 @@ public class MainUI : MonoBehaviour
             //myProjectileLauncher.isDrawing = false;
         });
 
-        YSlider.RegisterValueChangedCallback(evt =>
+        CannonSlider.RegisterValueChangedCallback(evt =>
         {
-            Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
-            gameManager.projectileSO.angleY = evt.newValue;
-            YSlider.label = string.Concat(evt.newValue.ToString(), " Angle");
-
-            gameManager.launchingPad.transform.rotation = Quaternion.Euler(rotation.x, evt.newValue, rotation.z);
+            cannon.localRotation = Quaternion.Euler(0f, evt.newValue, 0f);
         });
 
-        ZSlider.RegisterValueChangedCallback(evt =>
+        BarrelSlider.RegisterValueChangedCallback(evt =>
         {
-            Vector3 rotation = gameManager.launchingPad.transform.eulerAngles;
-            gameManager.projectileSO.angleZ = evt.newValue;
-            ZSlider.label = string.Concat(evt.newValue.ToString(), " Angle");
-            gameManager.launchingPad.transform.rotation = Quaternion.Euler(rotation.x, rotation.y, evt.newValue);
+            gunBarrel.localRotation = Quaternion.Euler(0f, evt.newValue, 0f);
         });
+
 
         speedSlider.RegisterValueChangedCallback(evt =>
         {

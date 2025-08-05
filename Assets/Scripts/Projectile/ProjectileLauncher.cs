@@ -1,6 +1,8 @@
 using UnityEngine;
 public class ProjectileLauncher : MonoBehaviour
 {
+    [SerializeField] CannonShake cannonShake;
+    [SerializeField] ParticleSystem firePS;
     [SerializeField] CameraFollow cameraFollow;
     public ProjectileSO projectileSO;
     public Transform launchPoint;
@@ -12,12 +14,15 @@ public class ProjectileLauncher : MonoBehaviour
     public int linePoints = 175;
     public float timeIntervalInPoints = 0.01f;
 
-    public bool isDrawing=true;
+    public bool isDrawing = true;
+
 
     private void Start()
     {
         FlyingStone.OnMissionComplete += OnMissionComplete;
+        firePS.Stop();
     }
+
     private void OnMissionComplete()
     {
         lineRenderer.enabled = true;        
@@ -35,11 +40,14 @@ public class ProjectileLauncher : MonoBehaviour
             }
             else
                 lineRenderer.enabled = false;
-        }*/      
+        }*/
     }
 
     public void ThrowStone()
     {
+        cannonShake.Fire();
+        firePS.Play();
+
         lineRenderer.enabled = false;
         Quaternion rot = launchPoint.rotation;
         rot.x = projectileSO.angleX;
@@ -60,7 +68,6 @@ public class ProjectileLauncher : MonoBehaviour
         float time = 0;
         for (int i = 0; i < linePoints; i++)
         {
-         
             var x = (startVelocity.x * time) + (Physics.gravity.x / 2 * time * time);
             var y = (startVelocity.y * time) + (Physics.gravity.y / 2 * time * time);
             var z= (startVelocity.z * time) + (Physics.gravity.z / 2 * time * time);
