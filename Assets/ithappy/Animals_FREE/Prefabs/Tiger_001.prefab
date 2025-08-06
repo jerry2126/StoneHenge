@@ -1015,10 +1015,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WalkSpeed: 1
-  m_RunSpeed: 7
+  m_WalkSpeed: 0.5
+  m_RunSpeed: 3.5
   m_RotateSpeed: 245
-  m_Space: 0
+  m_Space: 1
   m_JumpHeight: 5
   m_VerticalID: Vert
   m_StateID: State
@@ -1039,7 +1039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c67ce836140b4479603ebcf944cddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimalController: {fileID: 0}
+  m_Mover: {fileID: 0}
+  player: {fileID: 0}
   m_Target: {x: 0, y: 0, z: 0}
 --- !u!1 &6083925854692512673
 GameObject:

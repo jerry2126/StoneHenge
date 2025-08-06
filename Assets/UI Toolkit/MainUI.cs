@@ -91,7 +91,7 @@ public class MainUI : MonoBehaviour
         ShowPopup(list, WhenYouWin);
     }
 
-    public void OnRayCastHitZombiEventHandler() 
+    public void OnRayCastHitAnimalEventHandler() 
     {
         List<string> list = new List<string>();
         list.Add("Lose");
@@ -107,12 +107,6 @@ public class MainUI : MonoBehaviour
     void WhenYouWin()
     {
         gameManager.targetStoneManager.CreateOneTargeStone();
-    }
-
-    public void TargetStone_OnKnockDownEvent(StoneType obj) //stage clear
-    {
-        //what to do next? 
-        Debug.Log("One stone fell down!");
     }
 
     private void SeupElements()

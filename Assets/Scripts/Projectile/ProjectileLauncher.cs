@@ -4,13 +4,13 @@ public class ProjectileLauncher : MonoBehaviour
     [SerializeField] CannonShake cannonShake;
     [SerializeField] ParticleSystem firePS;
     [SerializeField] CameraFollow cameraFollow;
-    public ProjectileSO projectileSO;
-    public Transform launchPoint;
-    public GameObject projectile;
+    [SerializeField] ProjectileSO projectileSO;
+    [SerializeField] Transform launchPoint;
+    [SerializeField] GameObject projectile;
     public float launchSpeed = 10f;
 
     [Header("Trajectory Display")]
-    public LineRenderer lineRenderer;
+    [SerializeField] LineRenderer lineRenderer;
     public int linePoints = 175;
     public float timeIntervalInPoints = 0.01f;
 
@@ -47,6 +47,7 @@ public class ProjectileLauncher : MonoBehaviour
     {
         cannonShake.Fire();
         firePS.Play();
+        SoundManager.Instance.PlaySFXByIndex(1);
 
         lineRenderer.enabled = false;
         Quaternion rot = launchPoint.rotation;

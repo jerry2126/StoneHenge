@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+
 public enum StoneType
 {
     Low,
@@ -19,18 +20,20 @@ public class TargetStone : MonoBehaviour
     public Renderer objRenderer;
     public float offset = 30f;
    
-    float fadeDuration = 2f;
+    public float fadeDuration = 2f;
     Color originalColor;
     public bool isHit = false;
-    MeshCollider meshCollider;
+    [SerializeField] MeshCollider meshCollider;
+    
+    
     private void OnEnable()
     {
         RaycastAtHeight.OnNoStoneStandingEvent += OnNoStoneStandingEvent;
         meshCollider = GetComponent<MeshCollider>();
 
         Vector3 highestPoint = gameObject.GetComponent<Collider>().bounds.max;
-      
     }
+
     private void OnDisable()
     {
         RaycastAtHeight.OnNoStoneStandingEvent -= OnNoStoneStandingEvent;
@@ -45,6 +48,7 @@ public class TargetStone : MonoBehaviour
     {
         originalColor = objRenderer.material.color;
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Stone"))
@@ -67,10 +71,8 @@ public class TargetStone : MonoBehaviour
                 Debug.Log("Distance to nearest edge: " + edgeDistance);
                 OnHitDistanceEvent.Invoke(edgeDistance);
             }
-
         }
     }
-
 
     void VisualizeContact(Vector3 point)
     {
@@ -81,8 +83,6 @@ public class TargetStone : MonoBehaviour
         Destroy(marker, 2f); 
     }
         
-   
-
     IEnumerator FadeOutObject()
     {
         float elapsed = 0f;
@@ -100,6 +100,4 @@ public class TargetStone : MonoBehaviour
         OnKnockDownEvent?.Invoke(stoneType);
         Destroy(gameObject, 0.2f);
     }
-
-
 }

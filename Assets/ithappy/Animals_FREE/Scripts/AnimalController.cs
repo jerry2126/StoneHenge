@@ -9,23 +9,13 @@ public class AnimalController : MonoBehaviour
     [SerializeField] Transform container;
     [SerializeField] EffectOnAnimal effectOnAnimal;
     [SerializeField] Transform player;
-    public float spacing = 2f; // Dist   
-    int animalCount = 5;
+    public float spacing = 2f; // Dist
+    public int animalCount = 5;
 
 
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-    }
-
-    private void Start()
-    {
-        TargetStone.OnKnockDownToAnimalEvent += TargetStone_OnKnockDownToAnimalEvent;
-    }
-
-    private void TargetStone_OnKnockDownToAnimalEvent(Vector3 obj)
-    {
-        RemoveCloseAnimals();
     }
 
     public void Initialize()
@@ -34,12 +24,7 @@ public class AnimalController : MonoBehaviour
         EnableAnimals();
     }
 
-    public void TakeBreak()
-    {
-
-    }
-
-    void RemoveCloseAnimals()
+    public void RemoveCloseAnimals()
     {
         List<Transform> allObjects = new List<Transform>();
         foreach (Transform child in container)
@@ -74,6 +59,7 @@ public class AnimalController : MonoBehaviour
                 Vector3 position = new Vector3(x, y, z) * spacing;
                 GameObject clone = Instantiate(animals[UnityEngine.Random.Range(0, animals.Count)], position, rot);
                 clone.transform.SetParent(container, false);
+                clone.transform.localPosition = position;
                 clone.GetComponent<MovePlayerInput>().enabled = false;
             }
         }

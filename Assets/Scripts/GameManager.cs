@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        RaycastDrawer.OnRayCastHitZombiEvent += OnRayCastHitAnimalEventHandler;
+        RaycastDrawer.OnRayCastHitAnimalEvent += OnRayCastHitAnimalEventHandler;
         TargetStone.OnKnockDownEvent += TargetStone_OnKnockDownEvent;
         TargetStoneManager.OnStageClearEvent += OnStageClearEvent;
         FlyingStone.OnMissionComplete += FlyingStone_OnMissionComplete;
@@ -46,13 +46,13 @@ public class GameManager : MonoBehaviour
 
     private void TargetStone_OnKnockDownEvent(StoneType type)
     {
-       mainUI.TargetStone_OnKnockDownEvent((StoneType)type);
+        animalController.RemoveCloseAnimals();
     }
 
     private void OnRayCastHitAnimalEventHandler()
     {
-        mainUI.OnRayCastHitZombiEventHandler();
-       //What to do next? 
+        animalController.RemoveAllAnimals();
+        mainUI.OnRayCastHitAnimalEventHandler();
     }
 
     public void ThrowStone()

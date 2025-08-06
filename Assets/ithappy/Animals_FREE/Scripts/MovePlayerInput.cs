@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Controller
 {
@@ -44,11 +46,11 @@ namespace Controller
             m_Target = player.transform.position;
         }
 
-        //private void Update()
-        //{
-        //    //GatherInput();
-        //    //SetInput();
-        //}
+        private void Update()
+        {
+            //GatherInput();
+            SetInput();
+        }
 
         //public void GatherInput()
         //{
@@ -76,6 +78,7 @@ namespace Controller
         {
             m_Axis = vec2;
             m_IsRun = isrun;
+            position.z = transform.position.z;
             m_Target = position;
         }
 
@@ -84,17 +87,17 @@ namespace Controller
             m_Mover.SetMovement(speed);
         }
 
-        //public void SetInput()
-        //{
-        //    if (m_Mover != null)
-        //    {
-        //        m_Mover.SetInput(in m_Axis, in m_Target, in m_IsRun, m_IsJump);
-        //    }
+        public void SetInput()
+        {
+            if (m_Mover != null)
+            {
+                m_Mover.SetInput(in m_Axis, in m_Target, in m_IsRun);
+            }
 
-        //    if (m_Camera != null)
-        //    {
-        //        m_Camera.SetInput(in m_MouseDelta, m_Scroll);
-        //    }
-        //}
+            //if (m_Camera != null)
+            //{
+            //    m_Camera.SetInput(in m_MouseDelta, m_Scroll);
+            //}
+        }
     }
 }

@@ -4,22 +4,18 @@ using UnityEngine;
 public class TargetStoneManager : MonoBehaviour
 {
     public static event Action OnStageClearEvent;
-    public GameObject stonePrefab;
+    [SerializeField] GameObject stonePrefab;
     [SerializeField] QuadCreator quadCreator;
     [SerializeField] RaycastAtHeight raycastAtHeight;
     [SerializeField] int count = default(int);
+    [SerializeField] TargetStoneSO[] targetStoneSO;
 
     Vector3 scale = new Vector3(1f, 1f, 1f);
     Vector3 pos;
-    float newMass = 1;
-    int clearCount = 3;
+    public float newMass = 1;
+    public int clearCount = 3;
 
 
-    private void OnEnable()
-    {
-       
-
-    }
     private void Start()
     {
         quadCreator.CreateQuad();
@@ -48,11 +44,19 @@ public class TargetStoneManager : MonoBehaviour
         {
             Destroy(item);
         }
-       // quadCreator.CreateQuad();
+        //quadCreator.CreateQuad();
         CreateOneTargeStone();
     }
 
-    public void CreateOneTargeStone()
+
+
+
+    /// <summary>
+    /// /////////////////////////////////////////////////
+    /// </summary>
+
+
+    public void CreateOneTargeStone()//여기서 so의 lv에 따라 쿼드크기, 돌맹이 사이즈, 돌맹이 질량 설정하기
     {
         quadCreator.CreateQuad();
         //range 
@@ -66,7 +70,7 @@ public class TargetStoneManager : MonoBehaviour
         Rigidbody rb = stonePrefab.GetComponent<Rigidbody>();
         if (rb != null) rb.mass = newMass;
 
-       var clone =  Instantiate(stonePrefab, pos, Quaternion.identity);
+        var clone =  Instantiate(stonePrefab, pos, Quaternion.identity);
         raycastAtHeight.Init(clone);
     }
 
@@ -79,10 +83,5 @@ public class TargetStoneManager : MonoBehaviour
         newMass += 1;
 
         quadCreator.CreateQuad();
-        
-
     }
-
-   
-
 }

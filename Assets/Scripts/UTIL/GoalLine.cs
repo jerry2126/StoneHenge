@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class GoalLine : MonoBehaviour
 {
+    [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform pointA;
     [SerializeField] Transform pointB;
     [SerializeField] Material material;
    
-    LineRenderer lineRenderer;
     public bool isDrawing = true;
+
+
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -26,5 +28,4 @@ public class GoalLine : MonoBehaviour
         lineRenderer.SetPosition(0, pointA.position);
         lineRenderer.SetPosition(1, pointB.position);
     }
-
 }

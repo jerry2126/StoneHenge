@@ -73,7 +73,7 @@ namespace Controller
             m_Animation.AnimateIK(in m_Target, m_LookWeight);
         }
 
-        public void SetInput(in Vector2 axis, in Vector3 target, in bool isRun, in bool isJump)
+        public void SetInput(in Vector2 axis, in Vector3 target, in bool isRun)
         {
             m_Axis = axis;
             m_Target = target;

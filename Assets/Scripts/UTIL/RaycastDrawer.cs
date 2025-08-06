@@ -4,8 +4,10 @@ using UnityEngine.UIElements;
 
 public class RaycastDrawer : MonoBehaviour
 {
-    public static event Action OnRayCastHitZombiEvent;
-    public bool isHasHit=false;
+    public static event Action OnRayCastHitAnimalEvent;
+    public bool isHasHit = false;
+
+
     void Update()
     {
        // if (isHasHit) return; 
@@ -13,13 +15,12 @@ public class RaycastDrawer : MonoBehaviour
         Vector3 direction = transform.forward;
         float maxDistance = 100f;
 
-       
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance))
         {
             Debug.DrawLine(origin, hit.point, Color.red); 
             Destroy(hit.transform.gameObject);
 
-            OnRayCastHitZombiEvent?.Invoke();
+            OnRayCastHitAnimalEvent?.Invoke();
             //isHasHit = true;
         }
         else
