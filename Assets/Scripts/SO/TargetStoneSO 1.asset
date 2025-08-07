@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 3
   hight: 3
-  mass: 50
-  scale: {x: 1, y: 1, z: 1}
+  mass: 20
+  scale: {x: 7.5, y: 7.5, z: 7.5}
   level: 1

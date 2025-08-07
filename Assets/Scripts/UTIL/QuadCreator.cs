@@ -11,9 +11,11 @@ public class QuadCreator : MonoBehaviour
     [SerializeField] GameObject prefabToSpawn;
     [SerializeField] GameObject quad;
 
-    Vector3 position = Vector3.zero;  
-    float width = 2f;
-    float height = 2f;
+    Vector3 position = Vector3.zero;
+    float width;
+    float height;
+
+
     private void OnEnable()
     {
         position = container.transform.position;
@@ -29,10 +31,9 @@ public class QuadCreator : MonoBehaviour
     public void CreateQuad()
     {
         GameObject target = GameObject.Find("AreaQuad");
-        if (target != null)     
+        if (target != null)
             Destroy(target);
         
-
         quad = new GameObject("AreaQuad");
         quad.transform.position = position;
         quad.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
@@ -53,7 +54,6 @@ public class QuadCreator : MonoBehaviour
         };
         mesh.vertices = vertices;
         mesh.RecalculateBounds();
-
 
         int[] triangles = new int[6]
         {
@@ -82,16 +82,15 @@ public class QuadCreator : MonoBehaviour
         mesh.normals = normals;
         mesh.uv = uv;
         meshFilter.mesh = mesh;       
-
     }
 
-    public Vector3 GetArea()  // 메서드 명 바꾸기.  GetRandomPoint is better. 
-    {                       // local과 world 좌표계 이해 
+    public Vector3 GetRandomPoint()// local과 world 좌표계 이해 
+    {
         Vector3 localPos = new Vector3(
            Random.Range(0f, width),
            Random.Range(0f, height),
            0f
-       );       
-        return quad.transform.TransformPoint(localPos);
+       );
+    return quad.transform.TransformPoint(localPos);
     }    
 }

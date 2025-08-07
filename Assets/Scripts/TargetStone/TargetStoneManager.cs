@@ -1,26 +1,24 @@
 using System;
 using UnityEngine;
+using static UnityEngine.Rendering.HighDefinition.ScalableSettingLevelParameter;
 
 public class TargetStoneManager : MonoBehaviour
 {
     public static event Action OnStageClearEvent;
-    [SerializeField] GameObject stonePrefab;
+    public GameObject stonePrefab;
     [SerializeField] QuadCreator quadCreator;
-    [SerializeField] RaycastAtHeight raycastAtHeight;
-    [SerializeField] int count = default(int);
+
     [SerializeField] TargetStoneSO[] targetStoneSO;
 
-    Vector3 scale = new Vector3(1f, 1f, 1f);
     Vector3 pos;
-    public float newMass = 1;
+    public int level = default(int);
+    public int count = default(int);
     public int clearCount = 3;
 
 
     private void Start()
     {
-        quadCreator.CreateQuad();
         TargetStone.OnKnockDownEvent += TargetStone_OnKnockDownEvent;
-        raycastAtHeight.OnStoneHasFallenEvent += RaycastAtHeight_OnStoneHasFallenEvent;   
     }
 
     private void RaycastAtHeight_OnStoneHasFallenEvent()
@@ -33,55 +31,39 @@ public class TargetStoneManager : MonoBehaviour
         count++;
         if (count == clearCount)
         {
+            level++;
             count = 0;
-            ResetValue();
             OnStageClearEvent?.Invoke();
             return;
         }
+        CreateOneTargeStone();
+    }
 
+    public void CreateOneTargeStone()
+    {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Target");
         foreach (GameObject item in objects)
         {
             Destroy(item);
         }
-        //quadCreator.CreateQuad();
-        CreateOneTargeStone();
-    }
 
+        //quad.width & quad.hight
+        quadCreator.Setup(targetStoneSO[level].width, targetStoneSO[level].hight);
 
-
-
-    /// <summary>
-    /// /////////////////////////////////////////////////
-    /// </summary>
-
-
-    public void CreateOneTargeStone()//여기서 so의 lv에 따라 쿼드크기, 돌맹이 사이즈, 돌맹이 질량 설정하기
-    {
+        //quad create
         quadCreator.CreateQuad();
-        //range 
-        pos = quadCreator.GetArea();
-        pos.y = 0.1f;
 
-        //size
-        stonePrefab.transform.localScale = scale;
+        //quad.Stone random range   //stone pos
+        pos = quadCreator.GetRandomPoint();
+        pos.y = 0.5f;
 
-        //mass
+        //stone.scale
+        stonePrefab.transform.localScale = targetStoneSO[level].scale;
+
+        //stone.mass
         Rigidbody rb = stonePrefab.GetComponent<Rigidbody>();
-        if (rb != null) rb.mass = newMass;
+        if (rb != null) rb.mass = targetStoneSO[level].mass;
 
         var clone =  Instantiate(stonePrefab, pos, Quaternion.identity);
-        raycastAtHeight.Init(clone);
-    }
-
-    public void ResetValue()
-    {
-        //size
-        scale = new Vector3(scale.x += 0.1f, scale.y += 0.3f, scale.z += 0.3f);
-
-        //mass
-        newMass += 1;
-
-        quadCreator.CreateQuad();
     }
 }

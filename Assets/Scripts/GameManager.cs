@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Script")]
     public ProjectileSO projectileSO;
+    public TargetStoneSO targetStoneSO;
     public MainUI mainUI;
     public ProjectileLauncher projectileLauncher;
     public TargetStoneManager targetStoneManager;
@@ -28,9 +29,18 @@ public class GameManager : MonoBehaviour
         TargetStone.OnKnockDownEvent += TargetStone_OnKnockDownEvent;
         TargetStoneManager.OnStageClearEvent += OnStageClearEvent;
         FlyingStone.OnMissionComplete += FlyingStone_OnMissionComplete;
+        MainUI.GameResetEvent += MainUI_GameResetEvent;
 
         targetStoneManager.CreateOneTargeStone();
         animalController.Initialize();
+    }
+
+    private void MainUI_GameResetEvent()
+    {
+        targetStoneManager.level = default(int);
+        targetStoneManager.count = default(int);
+        animalController.Initialize();
+        targetStoneManager.CreateOneTargeStone();
     }
 
     private void FlyingStone_OnMissionComplete()

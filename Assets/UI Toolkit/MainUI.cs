@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class MainUI : MonoBehaviour
 {
+    public static event Action GameResetEvent;
+
     [Header("Script")]
     [SerializeField] GameManager gameManager;
 
@@ -100,8 +102,9 @@ public class MainUI : MonoBehaviour
     }
 
     void WhenYouLose()
-    {        
+    {
         Debug.Log("Game again!");
+        GameResetEvent?.Invoke();
     }
 
     void WhenYouWin()
@@ -171,7 +174,6 @@ public class MainUI : MonoBehaviour
         {
             gunBarrel.localRotation = Quaternion.Euler(0f, evt.newValue, 0f);
         });
-
 
         speedSlider.RegisterValueChangedCallback(evt =>
         {

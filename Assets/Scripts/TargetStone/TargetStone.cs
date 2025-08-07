@@ -16,6 +16,8 @@ public class TargetStone : MonoBehaviour
     public static event Action<float>   OnHitDistanceEvent; // EffectManager
     public static event Action<Vector3> OnHitContactEvent;  // 
 
+    [SerializeField] TargetStoneManager targetStoneManager;
+    [SerializeField] MeshCollider meshCollider;
     public StoneType stoneType;
     public Renderer objRenderer;
     public float offset = 30f;
@@ -23,14 +25,17 @@ public class TargetStone : MonoBehaviour
     public float fadeDuration = 2f;
     Color originalColor;
     public bool isHit = false;
-    [SerializeField] MeshCollider meshCollider;
+
+    public bool isHasFallen;
+    public float rayDistance = 1f;
+    public float lapTime = 0f;
+
     
     
     private void OnEnable()
     {
         RaycastAtHeight.OnNoStoneStandingEvent += OnNoStoneStandingEvent;
         meshCollider = GetComponent<MeshCollider>();
-
         Vector3 highestPoint = gameObject.GetComponent<Collider>().bounds.max;
     }
 
@@ -39,14 +44,46 @@ public class TargetStone : MonoBehaviour
         RaycastAtHeight.OnNoStoneStandingEvent -= OnNoStoneStandingEvent;
     }
 
-    private void OnNoStoneStandingEvent()
-    {
-        StartCoroutine(FadeOutObject());
-    }
-
     private void Start()
     {
         originalColor = objRenderer.material.color;
+    }
+    void Update()
+    {
+        if (isHasFallen) return;
+
+        //sGetComponent.<Renderer> (targetStoneManager.stonePrefab).bounds.size.y/2
+
+
+        //targetStoneManager.stonePrefab.
+
+
+
+        Vector3 origin = transform.position;
+        Vector3 direction = -transform.up;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance))
+        {
+            Debug.Log("Hit object: " + hit.collider.name);
+            Debug.DrawRay(origin, direction * rayDistance, Color.green);
+        }
+        else
+        {
+            lapTime += Time.deltaTime;
+            if (lapTime > 1)
+            {
+                isHasFallen = true;
+                OnKnockDownToAnimalEvent?.Invoke(transform.position);
+                Debug.Log("It has fallen");
+                Debug.DrawRay(origin, direction * rayDistance, Color.red);
+                StartCoroutine(FadeOutObject());
+            }
+        }
+    }
+
+    private void OnNoStoneStandingEvent()
+    {
+        StartCoroutine(FadeOutObject());
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -15,5 +15,5 @@ MonoBehaviour:
   width: 10
   hight: 10
   mass: 30
-  scale: {x: 0.5, y: 0.5, z: 0.5}
+  scale: {x: 3, y: 3, z: 3}
   level: 3
