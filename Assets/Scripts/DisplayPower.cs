@@ -6,9 +6,10 @@ public class DisplayPower : MonoBehaviour
     [SerializeField] TextMeshProUGUI label01;
     [SerializeField] TextMeshProUGUI label02;
 
-    private void Start()
+
+    public void SetPower(string name, string text)
     {
-        label01.text = "ª°∞£ µπ∏Õ¿Ã";
-        label02.text = "»˚: 100";
+        label01.text = name;
+        label02.text = text;
     }
 }

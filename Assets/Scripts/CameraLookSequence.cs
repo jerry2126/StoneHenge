@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class CameraLookSequence : MonoBehaviour
 {
-    [SerializeField] WorldSpaceNameTag worldSpaceNameTag;
+   
     //[SerializeField] CameraFollow cameraFollow;
     [SerializeField] Transform[] targets;
     CancellationTokenSource cts = new CancellationTokenSource();
@@ -26,7 +26,7 @@ public class CameraLookSequence : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             StopCameraWork();
-            //RemoveBillBoard();
+          
             SceneManager.LoadScene("StoneHenge");
         }
     }
@@ -35,7 +35,7 @@ public class CameraLookSequence : MonoBehaviour
     {
         CancellationToken token = cts.Token;
         isRunning = true;
-        CreateBillBoard();
+        
         StartCameraSequence(token);
     }
 
@@ -44,13 +44,7 @@ public class CameraLookSequence : MonoBehaviour
 
     }
 
-    private void CreateBillBoard()
-    {
-        foreach (Transform target in targets)
-        {
-            worldSpaceNameTag.CreateDisplay(target);
-        }
-    }
+   
 
     async void StartCameraSequence(CancellationToken token)
     {
@@ -75,7 +69,7 @@ public class CameraLookSequence : MonoBehaviour
 
     async Task LookAtTarget(Transform target, CancellationToken token)
     {
-        worldSpaceNameTag.DisplayTextType(target.name);
+        //worldSpaceNameTag.DisplayTextType(target.name);
 
         float elapsed = 0f;
         float duration = 1.5f;

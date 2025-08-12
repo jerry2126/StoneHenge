@@ -7,10 +7,10 @@ public class WorldSpaceNameTag : MonoBehaviour
     [SerializeField] GameObject[] allObjects;
     [SerializeField] GameObject nameTagPrefab;
     [SerializeField] Transform target;
-   
+
     TextMeshProUGUI label01;
     TextMeshProUGUI label02;
-   
+
     public Transform CameraTarget;
     public float smoothing = 5f;
     public Vector3 offset;
@@ -21,11 +21,12 @@ public class WorldSpaceNameTag : MonoBehaviour
 
     public void CreateDisplay(Transform target)
     {
+        //return; // This method is not used in the current context, so we can skip it.
         GameObject clone = Instantiate(nameTagPrefab);
         clone.transform.SetParent(target);
         clone.transform.localPosition = new Vector3(0, 3, 0);
         TextMeshProUGUI[] texts = clone.GetComponentsInChildren<TextMeshProUGUI>();
-       
+
         foreach (var tmp in texts)
         {
             if (tmp.name == "label01")
@@ -46,7 +47,7 @@ public class WorldSpaceNameTag : MonoBehaviour
 
     public void DisplayTextType(string TextType)
     {
-        if (TextType=="Cube01")
+        if (TextType == "Cube01")
         {
             label01Text = "Cube 01";
             label02Text = "Cube 01";
