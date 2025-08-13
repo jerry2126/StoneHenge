@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class CameraLookSequence : MonoBehaviour
 {
-   
+
     //[SerializeField] CameraFollow cameraFollow;
+    [SerializeField] IntroCameraWork introCameraWork;
     [SerializeField] Transform[] targets;
     CancellationTokenSource cts = new CancellationTokenSource();
     Vector3 originPos;
@@ -57,13 +58,19 @@ public class CameraLookSequence : MonoBehaviour
                     token.ThrowIfCancellationRequested();
                 }
                 catch (Exception)
-                {                    
+                {
                     //cameraFollow.Restore();
                     break;
                 }
                 await LookAtTarget(target, token);
+                await introCameraWork_PlayAnime(target);
                 await Task.Delay(1000); // Wait 1 second
             }
+        }
+
+        async Task introCameraWork_PlayAnime(Transform target)
+        {
+            introCameraWork.PlayAnimationByName(target);
         }
     }
 
