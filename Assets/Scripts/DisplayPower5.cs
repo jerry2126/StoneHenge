@@ -9,7 +9,7 @@ public class DisplayPower5 : MonoBehaviour
 
     private void Start()
     {
-        label01.text = "05";
-        label02.text = "055";
+        label01.text = "게임 시작";
+        label02.text = "Q키를 눌러 게임을 시작하세요!";
     }
 }

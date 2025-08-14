@@ -9,7 +9,7 @@ public class DisplayPower3 : MonoBehaviour
 
     private void Start()
     {
-        label01.text = "03";
-        label02.text = "033";
+        label01.text = "동물";
+        label02.text = "위험한 야생동물들이 달려옵니다!|n목표에 도달하기 전에 해치우세요!";
     }
 }

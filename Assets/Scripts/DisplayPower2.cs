@@ -9,7 +9,7 @@ public class DisplayPower2 : MonoBehaviour
 
     private void Start()
     {
-        label01.text = "02";
-        label02.text = "022";
+        label01.text = "비석";
+        label02.text = "쓰러질 경우 가까운 동물을 쫒아냅니다.";
     }
 }

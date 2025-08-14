@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class CameraLookSequence : MonoBehaviour
 {
-
+    [SerializeField] Vector3 cameraOffsetPos;
+    [SerializeField] Vector3 cameraOffsetRot;
     //[SerializeField] CameraFollow cameraFollow;
     [SerializeField] IntroCameraWork introCameraWork;
-    [SerializeField] Transform[] targets;
+    [SerializeField] GameObject[] targets;
     CancellationTokenSource cts = new CancellationTokenSource();
     Vector3 originPos;
     Quaternion rotation;
@@ -27,31 +28,25 @@ public class CameraLookSequence : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             StopCameraWork();
-          
             SceneManager.LoadScene("StoneHenge");
         }
     }
 
     public void Initialize()
     {
+        this.transform.position = cameraOffsetPos;
+        this.transform.rotation = Quaternion.Euler(cameraOffsetRot);
         CancellationToken token = cts.Token;
         isRunning = true;
         
         StartCameraSequence(token);
-    }
-
-    void RemoveBillBoard()
-    {
-
-    }
-
-   
+    }   
 
     async void StartCameraSequence(CancellationToken token)
     {
         while (isRunning)
         {
-            foreach (Transform target in targets)
+            foreach (GameObject target in targets)
             {
                 try
                 {
@@ -62,14 +57,22 @@ public class CameraLookSequence : MonoBehaviour
                     //cameraFollow.Restore();
                     break;
                 }
-                await LookAtTarget(target, token);
-                await introCameraWork_PlayAnime(target);
+
+                introCameraWork_PlayAnime(target);
+
+                await LookAtTarget(target.transform, token);
+
                 await Task.Delay(1000); // Wait 1 second
             }
         }
 
-        async Task introCameraWork_PlayAnime(Transform target)
+        async Task introCameraWork_PlayAnime(GameObject target)
         {
+            if (target == null)
+            {
+                Debug.Log("Target object is null. Cannot play animation.");
+                return;
+            }
             introCameraWork.PlayAnimationByName(target);
         }
     }
@@ -81,8 +84,8 @@ public class CameraLookSequence : MonoBehaviour
         float elapsed = 0f;
         float duration = 1.5f;
         float smoothSpeed = 6;
-        Vector3 offset = new Vector3(0, 5, -10);
-        Vector3 targetCamPos = target.position + offset;
+        //Vector3 offset = new Vector3(0, 5, -10);
+        Vector3 targetCamPos = target.position + cameraOffsetPos;
 
         while (elapsed < duration)
         {
@@ -100,7 +103,12 @@ public class CameraLookSequence : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothSpeed * Time.deltaTime);
             transform.LookAt(target);
             await Task.Yield();
-        }
+        }///로테이션 오프셋 조정 필요!
+    }
+
+    public void OnApplicationQuit()
+    {
+        StopCameraWork();
     }
 
     public void StopCameraWork()

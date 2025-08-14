@@ -9,7 +9,7 @@ public class DisplayPower4 : MonoBehaviour
 
     private void Start()
     {
-        label01.text = "04";
-        label02.text = "044";
+        label01.text = "목표";
+        label02.text = "이곳에 동물이 들어오변 게임오버됩니다.|n두 번 까지 버틸 수 있습니다.";
     }
 }

@@ -1,48 +1,18 @@
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class IntroCameraWork : MonoBehaviour
 {
-    [SerializeField] GameObject Luancher;
-    [SerializeField] GameObject TargetStone;
-    [SerializeField] GameObject Animal;
-    [SerializeField] GameObject EndPoint;
-    [SerializeField] GameObject StartGame;
-
-
-    public void PlayAnimationByName(Transform targetObject)
+    public void PlayAnimationByName(GameObject targetObject)
     {
-        if (targetObject==null)
-        {
-            Debug.Log("Target object is null. Cannot play animation.");
-            return;
-        }
-
         Animator animator = targetObject.GetComponent<Animator>();
 
-        if (targetObject == Luancher.transform)
+        if (animator == null)
         {
-            animator.Play("LuancherRotation");
+            Debug.LogWarning("Animator component not found on the target object: " + targetObject.name);
+            return;
         }
-
-        if (targetObject == TargetStone.transform)
-        {
-            animator.Play("RockUpAndDown");
-        }
-
-        if (targetObject == Animal.transform)
-        {
-
-        }
-
-        if (targetObject == EndPoint.transform)
-        {
-
-        }
-
-        if (targetObject == StartGame.transform)
-        {
-
-        }
-        Debug.Log("PlayAnimationBy" + targetObject);
+        animator.SetTrigger("PlayAnimation");
+        Debug.Log("PlayAnimationBy:" + targetObject.name);
     }
 }
