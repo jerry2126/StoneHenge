@@ -18,10 +18,10 @@ public class CemaraWork : MonoBehaviour
 
     void AddOneMoreCamera()
     {
-        _camera.rect = new Rect(0f, 0f, 0.5f, 1f); // Left half
+        _camera.rect = new Rect(0f, 0f, 1f, 1f); // Left half
 
         _secondCemera.enabled = true;
-        _secondCemera.rect = new Rect(0.5f, 0f, 0.5f, 1f); // Right half
+        _secondCemera.rect = new Rect(0.7f, 0.7f, 0.3f, 0.3f); // Right half
         _secondCemera.transform.LookAt(targetStone);
     }
 

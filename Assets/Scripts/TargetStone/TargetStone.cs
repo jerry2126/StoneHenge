@@ -30,6 +30,8 @@ public class TargetStone : MonoBehaviour
     public float rayDistance = 1f;
     public float lapTime = 0f;
 
+    public GameObject targetStone;
+
     
     
     private void OnEnable()
@@ -52,14 +54,14 @@ public class TargetStone : MonoBehaviour
     {
         if (isHasFallen) return;
 
-        //sGetComponent.<Renderer> (targetStoneManager.stonePrefab).bounds.size.y/2
+        targetStone = GameObject.FindWithTag("Target");
+        if (targetStone == null) return;
 
+        targetStone = GameObject.FindWithTag("Target");
+        Renderer TargetStoneRenderer = targetStone.GetComponent<Renderer>();
+        float halfHeight = TargetStoneRenderer.bounds.size.y / 2f;
 
-        //targetStoneManager.stonePrefab.
-
-
-
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position - new Vector3(0, halfHeight, 0);
         Vector3 direction = -transform.up;
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, rayDistance))

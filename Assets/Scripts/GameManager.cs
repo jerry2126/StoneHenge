@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Script")]
     public ProjectileSO projectileSO;
-    public TargetStoneSO targetStoneSO;
+    public TargetStoneSO[] targetStoneSO;
     public MainUI mainUI;
     public ProjectileLauncher projectileLauncher;
     public TargetStoneManager targetStoneManager;
